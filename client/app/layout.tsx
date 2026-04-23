@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ReduxProvider from "@/redux/ReduxProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +32,27 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
 
+        {/* 🌄 Global Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: "url('/KreovateBg.jpg')",
+          }}
+        ></div>
+
+        {/* 🌫️ Dark overlay (important for readability) */}
+        <div className="absolute inset-0"></div>
+
+        {/* 💻 App content */}
+        <div className="relative z-10">
+
         <div>Mode: {process.env.NEXT_PUBLIC_ENV}</div>
-        {children}
+        <ReduxProvider>
+          <ToastContainer/>
+          {children}
+        </ReduxProvider>
+
+        </div>
         
       </body>
     </html>

@@ -1,17 +1,25 @@
 require("dotenv").config() // 🌸 secret keys loading... keep it cute & secure
 const express = require("express")  // 🚀 bringing the server vibes
-const mongoose  = require("mongoose") // 🍃 talking to MongoDB like besties
+const mongoose  = require("mongoose"); // 🍃 talking to MongoDB like besties
+const { FRONTEND_URL } = require("./utils/config.js");
+const cors = require("cors")
 
 const app = express(); // 💅 main character energy (My app starts here)
 
 // 💖 Connecting to MongoDB (pls connect fast, no drama)
 mongoose.connect(process.env.MONGO_URL)
 
+app.use(express.json()) //👈 body parser middleware
+
+app.use(cors({
+    origin: FRONTEND_URL,
+    credentials: true
+}))
+
 // -----------------------------
 // Routes
 // -----------------------------
 app.use("/api/auth", require("./routes/auth.routes.js")) // auth routes plugged in 🔐
-
 
 
 // 🎀 Root route — just a cute lil hello from My API
